@@ -10,6 +10,7 @@ import httplib2
 import flask
 import os.path
 import urlparse
+from collections import defaultdict
 from flask import Flask, redirect, request, render_template, url_for
 app = Flask(__name__)
 
@@ -98,6 +99,18 @@ def _get_features(post, profile):
         len(message.split()),
     ])
 
+def sort_predictions(predictions):
+    totals_dict = defaultdict(int)
+    multi_outputs = [pred[u'outputMulti'] for pred in predictions]
+    for multi_output in multi_outputs:
+        for output in multi_output:
+            totals_dict[output[u'label']] += float(output[u'score'])
+    pred_tuples = [(totals_dict[key], key) for key in totals_dict]
+    pred_tuples.sort()
+    pred_tuples.reverse()
+    print pred_tuples
+    return [y for x, y in pred_tuples]
+
 def predict(features):
     return service().trainedmodels().predict(project=secrets.PROJECT_ID, body=features, id=secrets.MODEL_ID).execute() 
 
@@ -117,6 +130,6 @@ def test_login():
     predicted_posts = posts[:5]
     features_list = [_get_features(post, profile) for post in predicted_posts]
     predictions = map(predict, features_list)
-
-    return "".join(["<div>{0}@@@@@@@{1}</div>".format(prediction, post) for prediction, post in zip(predictions, predicted_posts)])
-    return "".join(["<div>{0}:{1}</div>".format(message, post) for message, post in zip(message_list, posts)])
+    sorted_outputs = sort_predictions(predictions)
+    
+    return str(sorted_outputs[:2])
