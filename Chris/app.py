@@ -9,6 +9,8 @@ app = Flask(__name__)
 OAUTH_DIALOG_API = "https://www.facebook.com/dialog/oauth"
 OAUTH_TOKEN_API = "https://graph.facebook.com/oauth/access_token"
 
+NUM_QUERIES = 10
+
 @app.route("/")
 def index():
     return render_template('index.html')
@@ -26,8 +28,10 @@ def test_login():
     access_token = data["access_token"][0]
     graph = facebook.GraphAPI(access_token)
     args = {
-        "since": int(time.mktime(time.localtime())-24*60*60*600),
-        "limit": 200,
+        "since": int(time.mktime(time.localtime())-24*60*60*200),
+        "limit": NUM_QUERIES * 5,    # only will run about ten queries through the Google Prediction API per user
     }
     posts = graph.request("me/feed", args)
-    return str(len(posts[u"data"]))  
+    message_list = [post[u"message"] for post in posts[u"data"] if u"message" in post]
+    return str(message_list)
+    return str([post[u"message"] for post in posts[u"data"]])  
