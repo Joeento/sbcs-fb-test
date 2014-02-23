@@ -8,6 +8,7 @@ from oauth2client.client import SignedJwtAssertionCredentials
 from apiclient import discovery
 import httplib2
 import flask
+import os.path
 from flask import Flask, redirect, request, render_template, url_for
 app = Flask(__name__)
 
@@ -19,7 +20,7 @@ NUM_QUERIES = 10
 scope = [
 	'https://www.googleapis.com/auth/prediction'
 ]
-with open("privatekey.pem") as key_file:
+with open(os.path.join(os.path.dirname(__file__),"privatekey.pem")) as key_file:
     key = key_file.read()
 
 credentials = SignedJwtAssertionCredentials("718613259106-nprethvrluh9j7ud2gfbkmbs57mllk6a@developer.gserviceaccount.com", key, scope)
