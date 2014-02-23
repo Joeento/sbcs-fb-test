@@ -9,6 +9,7 @@ from apiclient import discovery
 import httplib2
 import flask
 import os.path
+import urlparse
 from flask import Flask, redirect, request, render_template, url_for
 app = Flask(__name__)
 
@@ -72,7 +73,11 @@ def feature_from_content(content):
 def _get_features(post, profile):
     message = post.get(u"message", "") 
     message = _remove_punctuation(message)
-    link = _remove_punctuation(post.get(u"link", "NULL"))
+    link = post.get(u"link", "NULL")
+    if 'NULL' not in link:
+        parsed_uri  =  urlparse.urlparse(link)
+        link = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+    link = _remove_punctuation(link)
     word_count = len(message.split())
     message_tags = post.get(u"message_tags", {})    #  get length somewhere, and check if user is self
     found_person = 0
