@@ -132,5 +132,5 @@ def test_login():
     features_list = [_get_features(post, profile) for post in predicted_posts]
     predictions = map(predict, features_list)
     sorted_outputs = sort_predictions(predictions)
-    
-    return render_template("result.html", result = sorted_outputs[0], description = descriptions[sorted_outputs[0]])
+    title, commentary = descriptions[sorted_outputs[0]]
+    return render_template("result.html", result = title, description = commentary)
