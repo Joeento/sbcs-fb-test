@@ -34,4 +34,3 @@ def test_login():
     posts = graph.request("me/feed", args)
     message_list = [post[u"message"] for post in posts[u"data"] if u"message" in post]
     return str(message_list)
-    return str([post[u"message"] for post in posts[u"data"]])  
