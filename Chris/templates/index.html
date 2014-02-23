@@ -4,13 +4,13 @@
     <script>
       window.fbAsyncInit = function() {
         FB.init({
-          appId      : '214736522060342',
+          appId      : '{{ APP_ID }}',
           status     : true,
           xfbml      : true,
           cookie     : true
         });
 
-        FB.login(function(response) {
+        window.login = function () {FB.login(function(response) {
             if (response.authResponse) {
                 console.log('Welcome!  Fetching your information.... ');
                 FB.api('/me/feed?limit=100', function(response) {
@@ -20,7 +20,7 @@
             else {
                 console.log('User cancelled login or did not fully authorize.');
             }
-        }, {scope: 'read_stream'});
+        }, {scope: 'read_stream'})};
     };
    
       (function(d, s, id){
