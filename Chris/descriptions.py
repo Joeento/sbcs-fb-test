@@ -1,0 +1,19 @@
+descriptions = {
+    u'aggregator':"aa",
+    u'brag':"aa", 
+    u'overload':"aa",
+    u'inside':"aa",
+    u'enlightened':"aa",
+    u'political':"aa",
+    u'vague':"aa",
+    u'linkbait':"aa",
+    u'complainer':"aa",
+    u'promoter':"aa",
+    u'txtspeak':"aa",
+    u'hashtag':"aa",
+    u'selfie':"aa",
+    u'pageshares':"aa",
+    u'crowdsourcer':"aa",
+    u'games':"aa",
+    u'neutral':"aa"
+}

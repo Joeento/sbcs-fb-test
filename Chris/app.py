@@ -1,3 +1,4 @@
+from descriptions import descriptions
 import facebook
 import secrets
 import requests
@@ -132,4 +133,4 @@ def test_login():
     predictions = map(predict, features_list)
     sorted_outputs = sort_predictions(predictions)
     
-    return str(sorted_outputs[:2])
+    return render_template("result.html", result = sorted_outputs[0], description = descriptions[sorted_outputs[0]])
