@@ -1,8 +1,24 @@
+body {
+    background: url(../images/puppy1.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.transparent {
+    border-radius: 10px;
+}
+
 div.content {
+    margin: 0px;
+    padding: 0px;
     margin: 0 auto;
-    margin-top: 200px;
+    margin-left: 100px;
     width: 400px;
     text-align: center;
+    position: absolute;
+    top: 35%;
 }
 
 div.content>p {
@@ -11,7 +27,7 @@ div.content>p {
 
 div.button-container {
     margin: 0 auto;
-    max-width: 400px;
+    width: 360px;
     height: 50px;
 }
 

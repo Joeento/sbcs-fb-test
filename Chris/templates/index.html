@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
-<div class="content">
+<div class="content transparent">
     <h1>Puppies?</h1> 
     <div class="button-container">
         <a href="/login" class="btn btn-lg btn-block btn-social btn-facebook">
@@ -9,4 +9,11 @@
     </div>
     <p>This site examines your Facebook posting patterns and alerts you to your worst social media sin. Repent and win puppies!</p>
 </div>
+<script>
+$('.transparent').blurjs({
+    source: 'body',
+    radius: 10,
+    overlay: 'rgba(255,255,255,0.45)'
+});
+</script>
 {% endblock %}
