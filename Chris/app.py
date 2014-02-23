@@ -11,7 +11,7 @@ OAUTH_TOKEN_API = "https://graph.facebook.com/oauth/access_token"
 
 @app.route("/")
 def index():
-    return "Hello world"
+    return render_template('index.html')
 
 @app.route("/login")
 def login():
