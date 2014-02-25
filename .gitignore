@@ -1,3 +1,6 @@
 *secrets.py
 *.pyc
 .DS_STORE
+.p12
+.pem
+venv/
