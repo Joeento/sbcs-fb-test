@@ -44,7 +44,7 @@ def index():
 
 @app.route("/login")
 def login():
-    redirect_url = url_for('test_login', _external=True)
+    redirect_url = url_for('result', _external=True)
     return redirect("{}?client_id={}&redirect_uri={}&scope={}".format(OAUTH_DIALOG_API, secrets.CLIENT_ID, redirect_url, "read_stream"))
 
 def _remove_punctuation(text):
@@ -115,10 +115,10 @@ def sort_predictions(predictions):
 def predict(features):
     return service().trainedmodels().predict(project=secrets.PROJECT_ID, body=features, id=secrets.MODEL_ID).execute() 
 
-@app.route("/test_login")
-def test_login():
+@app.route("/result")
+def result():
     code = request.args.get('code')
-    response = requests.get("{}?client_id={}&redirect_uri={}&client_secret={}&code={}".format(OAUTH_TOKEN_API, secrets.CLIENT_ID, url_for('test_login', _external=True), secrets.APP_SECRET, code))    
+    response = requests.get("{}?client_id={}&redirect_uri={}&client_secret={}&code={}".format(OAUTH_TOKEN_API, secrets.CLIENT_ID, url_for('result', _external=True), secrets.APP_SECRET, code))    
     data = urlparse.parse_qs(response.text)
     access_token = data["access_token"][0]
     graph = facebook.GraphAPI(access_token)
