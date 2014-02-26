@@ -120,6 +120,8 @@ def result():
     code = request.args.get('code')
     response = requests.get("{}?client_id={}&redirect_uri={}&client_secret={}&code={}".format(OAUTH_TOKEN_API, secrets.CLIENT_ID, url_for('result', _external=True), secrets.APP_SECRET, code))    
     data = urlparse.parse_qs(response.text)
+    if not data:
+        return redirect(url_for('index'))
     access_token = data["access_token"][0]
     graph = facebook.GraphAPI(access_token)
     args = {
