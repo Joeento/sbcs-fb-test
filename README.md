@@ -20,3 +20,10 @@ For Messages:
 For URLS: 
 
 Get rid of punctuation, put in spaces instead. 
+
+To run locally:
+
+    virtualenv venv
+    . venv/bin/activate
+    pip install -r requirements.txt
+    python main.py
