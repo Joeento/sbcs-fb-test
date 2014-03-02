@@ -136,3 +136,4 @@ def result():
     sorted_outputs = sort_predictions(predictions)
     title, commentary = descriptions[sorted_outputs[0]]
     return render_template("result.html", result = title, description = commentary)
+    
