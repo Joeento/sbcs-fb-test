@@ -5,4 +5,7 @@ Werkzeug==0.9.4
 facebook-sdk==0.4.0
 itsdangerous==0.23
 requests==2.2.1
+google-api-python-client==1.2
+httplib2==0.8
+pycrypto==2.6.1
 wsgiref==0.1.2

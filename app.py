@@ -1,3 +1,4 @@
+from descriptions import descriptions
 import facebook
 import secrets
 import requests
@@ -43,7 +44,7 @@ def index():
 
 @app.route("/login")
 def login():
-    redirect_url = url_for('test_login', _external=True)
+    redirect_url = url_for('result', _external=True)
     return redirect("{}?client_id={}&redirect_uri={}&scope={}".format(OAUTH_DIALOG_API, secrets.CLIENT_ID, redirect_url, "read_stream"))
 
 def _remove_punctuation(text):
@@ -114,11 +115,13 @@ def sort_predictions(predictions):
 def predict(features):
     return service().trainedmodels().predict(project=secrets.PROJECT_ID, body=features, id=secrets.MODEL_ID).execute() 
 
-@app.route("/test_login")
-def test_login():
+@app.route("/result")
+def result():
     code = request.args.get('code')
-    response = requests.get("{}?client_id={}&redirect_uri={}&client_secret={}&code={}".format(OAUTH_TOKEN_API, secrets.CLIENT_ID, url_for('test_login', _external=True), secrets.APP_SECRET, code))    
+    response = requests.get("{}?client_id={}&redirect_uri={}&client_secret={}&code={}".format(OAUTH_TOKEN_API, secrets.CLIENT_ID, url_for('result', _external=True), secrets.APP_SECRET, code))    
     data = urlparse.parse_qs(response.text)
+    if not data:
+        return redirect(url_for('index'))
     access_token = data["access_token"][0]
     graph = facebook.GraphAPI(access_token)
     args = {
@@ -131,5 +134,5 @@ def test_login():
     features_list = [_get_features(post, profile) for post in predicted_posts]
     predictions = map(predict, features_list)
     sorted_outputs = sort_predictions(predictions)
-    
-    return str(sorted_outputs[:2])
+    title, commentary = descriptions[sorted_outputs[0]]
+    return render_template("result.html", result = title, description = commentary)
