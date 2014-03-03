@@ -52,7 +52,7 @@ def _remove_punctuation(text):
     exclude.remove('\'')
     exclude.remove('?')
     exclude.remove('#')
-    exclude.remove('-') 
+    exclude.remove('-')
     exclude.remove('!')
     
     text = text.lower()
@@ -60,7 +60,7 @@ def _remove_punctuation(text):
     for ch in text:
         if ch not in exclude:
             new_text += ch
-        else: 
+        else:
             new_text += ' '
     new_text = new_text.replace('?',' ? ').replace('#',' # ').replace('!',' ! ').replace('\n','')
     return new_text
@@ -73,7 +73,7 @@ def feature_from_content(content):
     }
 
 def _get_features(post, profile):
-    message = post.get(u"message", "") 
+    message = post.get(u"message", "")
     message = _remove_punctuation(message)
     link = post.get(u"link", "NULL")
     if 'NULL' not in link:
@@ -88,12 +88,12 @@ def _get_features(post, profile):
             print tag[u"id"], profile[u"id"]
             if tag[u"id"] == profile[u"id"]:
                 found_person = 1
-    status_type = 1 if post.get(u"status_type", "") == u"shared_story" else 0 
+    status_type = 1 if post.get(u"status_type", "") == u"shared_story" else 0
     
     return feature_from_content([
         _remove_punctuation(message),
         link,
-        1 if post.get(u"type") == "photo" else 0,   
+        1 if post.get(u"type") == "photo" else 0,
         status_type,
         found_person,
         len(message_tags),
@@ -113,12 +113,12 @@ def sort_predictions(predictions):
     return [y for x, y in pred_tuples]
 
 def predict(features):
-    return service().trainedmodels().predict(project=secrets.PROJECT_ID, body=features, id=secrets.MODEL_ID).execute() 
+    return service().trainedmodels().predict(project=secrets.PROJECT_ID, body=features, id=secrets.MODEL_ID).execute()
 
 @app.route("/result")
 def result():
     code = request.args.get('code')
-    response = requests.get("{}?client_id={}&redirect_uri={}&client_secret={}&code={}".format(OAUTH_TOKEN_API, secrets.CLIENT_ID, url_for('result', _external=True), secrets.APP_SECRET, code))    
+    response = requests.get("{}?client_id={}&redirect_uri={}&client_secret={}&code={}".format(OAUTH_TOKEN_API, secrets.CLIENT_ID, url_for('result', _external=True), secrets.APP_SECRET, code))
     data = urlparse.parse_qs(response.text)
     if not data:
         return redirect(url_for('index'))
