@@ -1,17 +1,59 @@
 {% extends 'base.html' %}
 {% block body %}
+<div id="fb-root"></div>
+<script>
+	/*
+	TODO: 
+	-Change picture
+	-Edit Copy
+	-Style share button
+	-Should we pass the id through python so it will remain a secret?
+	*/
+	window.fbAsyncInit = function() {
+		FB.init({
+			/*  */
+			appId      : '797617330252910',
+			status     : true,
+			xfbml      : true
+		});
+	};
+	(function(d, s, id){
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {return;}
+		js = d.createElement(s); js.id = id;
+		js.src = "//connect.facebook.net/en_US/all.js";
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+</script>
 <div class="content transparent">
-    <h1>You are {{result}}</h1> 
-    <p>{{description}}</p>
+	<h1>You are {{result}}</h1> 
+	<p>{{description}}</p>
+	<a id="share-fb" href="#">Share on Facebook</a>
 </div>
 <script>
-$('.transparent').blurjs({
-    source: 'body',
-    radius: 10,
-    overlay: 'rgba(255,255,255,0.45)'
-});
+	$('.transparent').blurjs({
+		source: 'body',
+		radius: 10,
+		overlay: 'rgba(255,255,255,0.45)'
+	});
+	$(document).ready(function() {
+		$("#share-fb").click(function(event) {
+			FB.ui(
+			{
+				method: 'feed',
+				name: '{{result}}',
+				caption: 'What\'s My Facebook sin?',
+				description: (
+					'{{description}}'
+					),
+				link: 'http://whats-my-fb-sin.com/',
+				picture: 'http://www.fbrell.com/public/f8.jpg'
+			});
+			event.preventDefault();
+		});
+	})
 </script>
 <script>
-history.replaceState({}, 'Your FB sin', '/result');
+	history.replaceState({}, 'Your FB sin', '/result');
 </script>
 {% endblock %}
