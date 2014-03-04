@@ -5,13 +5,11 @@
 	/*
 	TODO: 
 	-Change picture
-	-Edit Copy
-	-Style share button
-	-Should we pass the id through python so it will remain a secret?
+	-Edit post copy
+	-Should we pass the appId through python so it will remain a secret?
 	*/
 	window.fbAsyncInit = function() {
 		FB.init({
-			/*  */
 			appId      : '797617330252910',
 			status     : true,
 			xfbml      : true
@@ -28,7 +26,11 @@
 <div class="content transparent">
 	<h1>You are {{result}}</h1> 
 	<p>{{description}}</p>
-	<a id="share-fb" href="#">Share on Facebook</a>
+	<div class="button-container">
+		<a href="#" class="btn btn-social btn-facebook" id="share-fb">
+			<i class="fa fa-facebook"></i> Share on Facebook
+		</a>
+	</div>
 </div>
 <script>
 	$('.transparent').blurjs({
