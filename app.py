@@ -135,5 +135,5 @@ def result():
     predictions = map(predict, features_list)
     sorted_outputs = sort_predictions(predictions)
     title, commentary = descriptions[sorted_outputs[0]]
-    return render_template("result.html", result = title, description = commentary)
+    return render_template("result.html", result = title, description = commentary, app_id = secrets.APP_ID)
     
